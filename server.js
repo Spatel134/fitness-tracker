@@ -13,6 +13,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/airbub", {
   useCreateIndex: true,
 });
 
+// Connection check for mongoDB
 const connection = mongoose.connection;
 
 connection.on("connected", () => {
@@ -23,25 +24,16 @@ connection.on("error", (err) => {
   console.log("Mongoose connection error: " + err);
 });
 
+// Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static("public"));
 
-// TODO: ABSTRACT THESE PLACES ROUTES OUT INTO A CONTROLLER
+// Use routes
+app.use(require("./routes/api.js"));
+app.use(require("./routes/views.js"));
 
-// app.get("/api/places", (req, res) => {
-//   Place.find().then((allPlaces) => {
-//     res.json(allPlaces);
-//   });
-// });
-
-// app.post("/api/places", (req, res) => {
-//   Place.create(req.body).then((newPlace) => {
-//     res.json(newPlace);
-//   });
-// });
-
-// TODO: ADD PUT AND DELETE ROUTES
-
+// Listen on the PORT
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
