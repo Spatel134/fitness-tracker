@@ -6,7 +6,7 @@ const app = express();
 
 const PORT = process.env.PORT || 8080;
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/airbub", {
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/fitness-tracker", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
